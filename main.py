@@ -3,7 +3,7 @@ Created on Sun Sep  6 15:19:49 2020
 @author: Raul Ortega
 """
 import pygame
-from helpers import load_pattern, rules, alive_neighbors
+from helpers import load_pattern, alive_neighbors
 from time import sleep
 
 # define the two colors of the grid RGB
@@ -93,7 +93,7 @@ while not done:
     
     if run == True:
         grid = alive_neighbors(grid)
-        sleep(0.01)
+        sleep(0.1)
     
     
 pygame.quit() # so that it doesnt "hang" on exit

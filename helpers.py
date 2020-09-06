@@ -27,30 +27,31 @@ def alive_neighbors(grid):
     
     for row in range(1, m-1): # exclude edges for now
             for column in range(1, n-1): # exclude edges for now
+            
                 alive = 0 # alive neighbors counter
-                
                 # loop over its 8 neighbours
                 for i in [row-1, row, row+1]:
                     for j in [column-1, column, column+1]:
                         
                         # if alive and not itself count as alive
-                        if (grid[i][j] == 1) and ([i, j] != [row, column]):
-                            alive = alive+1
+                        if (grid[i][j] == 1): # and ([i, j] != [row, column]):
+                            alive = alive + 1
                             
                         # rules function decides whether it lives or dies
                 temp[row][column] = rules(grid[row][column], alive)
-    return temp
+    grid = temp
+    return grid
 # ============================
 # function that given a number of alive neighbors decides weather the cell
 # lives or dies
 def rules(state, alive):
     if state == 1: # cell was alive
-        if alive in [3, 4]:
+        if alive - 1 in [2,3]:
             return 1 # lives
         else:
             return 0 # dies
     else: # cell was dead
-        if alive in [2, 3]:
+        if alive in [3]:
             return 1 # lives
         else:
             return 0 # dies
