@@ -50,7 +50,7 @@ def rules(state, alive):
         else:
             return 0 # dies
     else: # cell was dead
-        if alive in [2, 3]:
+        if alive in [3]:
             return 1 # lives
         else:
             return 0 # dies
