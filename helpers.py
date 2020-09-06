@@ -45,12 +45,12 @@ def alive_neighbors(grid):
 # lives or dies
 def rules(state, alive):
     if state == 1: # cell was alive
-        if alive in [2, 3]:
+        if alive in [3, 4]:
             return 1 # lives
         else:
             return 0 # dies
     else: # cell was dead
-        if alive in [3]:
+        if alive in [2, 3]:
             return 1 # lives
         else:
             return 0 # dies
