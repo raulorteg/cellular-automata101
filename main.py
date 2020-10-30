@@ -18,7 +18,7 @@ margin = 2 # sets margin between grid locations
 
 # initialize the grid array full of zeros
 grid = []
-num_rows = 70
+num_rows = 100
 num_columns = num_rows # i want it squared
 for row in range(num_rows):
     grid.append([])
@@ -65,7 +65,8 @@ while not done:
             else:
                 grid[row][column] = 1
         elif event.type == pygame.KEYDOWN:
-            run = True
+            if event.key==pygame.K_RETURN:
+                run = True
     
     
     screen.fill(black) # fill background in black
@@ -93,7 +94,7 @@ while not done:
     
     if run == True:
         grid = alive_neighbors(grid)
-        sleep(0.1)
+        sleep(0.01)
     
     
 pygame.quit() # so that it doesnt "hang" on exit

@@ -4,6 +4,7 @@ Created on Sun Sep  6 16:49:41 2020
 
 @author: Raul Ortega
 """
+import copy 
 
 def load_pattern(grid):
     
@@ -23,7 +24,8 @@ def load_pattern(grid):
 def alive_neighbors(grid):
     m = len(grid)
     n = len(grid[0])
-    temp = grid
+    
+    temp = copy.deepcopy(grid) #this was missing
     
     for row in range(1, m-1): # exclude edges for now
             for column in range(1, n-1): # exclude edges for now
