@@ -1,7 +1,14 @@
 # Cellular Automata (Conway's Game of Life)
-
+<p align="center">
+  <img src = "files/world.png" height="250"/>
+<p/>
+   
 ## About
-Python implementation of a simple 2-dimensional cellular automata with the original rules of Conway's Game of life. The world is a grid where cells can be black (alive) or white (dead). The user can select by clicking on the cells which cells to initialize as alive and then to start the execution presses return/enter key.
+Python implementation of a 2-dimensional cellular automata with the original rules of Conway's Game of life. The world is a grid where cells can be black or white.
+
+The repository contains two main scripts:
+* In `main.py` the user can select by clicking on the cells which cells to initialize as alive and then to start the execution presses return/enter key. Then you can create patterns manually as displayed in the examples below (glider, guns, blinkers, ...)
+* `generations.py` is a rewrite of the original `main.py` for use in an experiment. The world starts empty, and then every some number of iterations lightining strikes, creating life in random postions of the world. Then rules are applied and this life evolves untill a new lightning strikes again. And this is repeated until user stops the execution. The purpose of this is to see how replicators and stable patterns appear and disappear from the initial empty world from the randomly revived cells from the lightning. Lightning allows the creation of patterns and destroys others by unstabilizing them. Upon letting the script for some time one can start recognizing some of the patterns (glider, blinkers, ...). Eventually the number of alive cells stabilizes, as can be seen by the plots when the program is terminated, if given sufficient time.
 
  The following rules specified the transitions:
 ```
@@ -21,12 +28,20 @@ more info: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 ## Requirements
 * Pygame
 * Numpy
+* Matplotlib
 
 ## Usage
 * Install requirements `pip install -r requirements.txt`
+
+for main.py:
 * Run main program `python main.py`
 * Select cells to initialize as alive, when finished then press `enter/return key`
 * To stop the execution of the program press `esc key`
+
+for generations.py:
+* Run main program `python generations.py --size=200 --spawn_freq=10`
+* Then press `enter/return key` to start simulation
+* To terminate simulation click exit, then plots of the evolution of alive cells will appear and will be saved.
 
 ## Examples
 <figure>
@@ -40,6 +55,10 @@ more info: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 <figure/>
 
 ## Structure
-* main.py: contains main loop of updating the visualization with Pygame
-* heloers.py: contains main logical function for execution of program (e.g Rules of the automata)
+```
+---/files
+--- main.py
+--- helpers.py
+--- generations.py
+```
 
