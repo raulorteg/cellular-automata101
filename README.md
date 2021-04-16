@@ -26,9 +26,7 @@ These rules, which compare the behavior of the automaton to real life, can be co
 more info: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
 ## Requirements
-* Pygame
-* Numpy
-* Matplotlib
+`requirements.txt`
 
 ## Usage
 * Install requirements `pip install -r requirements.txt`
@@ -43,7 +41,7 @@ for generations.py:
 * Then press `enter/return key` to start simulation
 * To terminate simulation click exit, then plots of the evolution of alive cells will appear and will be saved.
 
-## Examples
+## Examples (Sandbox)
 <figure>
   <img src = "files/gun_automata.gif" height="250"/>
   <figcaption>Fig. 1: Gun automata <figcaption/>
@@ -54,6 +52,11 @@ for generations.py:
   <figcaption>Fig. 2: Spaceships and other patterns <figcaption/>
 <figure/>
 
+## Plots (generations.py)
+<figure>
+  <img src = "files/percentage_cells_iterations.png" height="250"/>
+<figure/>
+  
 ## Structure
 ```
 |
