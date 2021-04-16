@@ -9,6 +9,7 @@ import argparse
 import copy
 from time import sleep
 import matplotlib.pyplot as plt
+from numba import jit
 
 # RGB colors of cells
 BLACK = (0, 0, 0)
@@ -19,6 +20,45 @@ GRAY = (211,211,211)
 height = 3
 width = height
 margin = 0
+
+@jit(nopython=True)
+def rules(state, alive):
+        """
+        1. Any live cell with two or three live neighbours survives.
+        2. Any dead cell with three live neighbours becomes a live cell.
+        3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+        """
+        if state == 1: # cell was alive
+            if alive - 1 in [2,3]:
+                return 1 # lives
+            else:
+                return 0 # dies
+        else: # cell was dead
+            if alive in [3]:
+                return 1 # revives
+            else:
+                return 0 # stays dead
+
+@jit(nopython=True)
+def update_world_(world_size, world, temp):
+     # updates the world according to rules
+
+        m, n = world_size, world_size
+        for row in range(1, m-1): # edges are buffer zones
+            for column in range(1, n-1): # edges are buffer zones
+                
+                alive = 0 # alive neighbors counter
+                # loop over its 8 neighbours
+                for i in [row-1, row, row+1]:
+                    for j in [column-1, column, column+1]:
+                          
+                         # if alive and not itself count as alive
+                        if (world[i,j] == 1): # and ([i, j] != [row, column]):
+                            alive = alive + 1
+                                
+                        # rules function decides whether it lives or dies
+                temp[row,column] = rules(world[row,column], alive)
+        return temp
 
 class World:
     def __init__(self, grid_dim):
@@ -48,24 +88,9 @@ class World:
                 return 0 # stays dead
 
     def update_world(self):
-        # updates the world according to rules
-
-        m, n = self.world_size, self.world_size
         temp = copy.deepcopy(self.world)
-        for row in range(1, m-1): # edges are buffer zones
-            for column in range(1, n-1): # edges are buffer zones
-                
-                alive = 0 # alive neighbors counter
-                # loop over its 8 neighbours
-                for i in [row-1, row, row+1]:
-                    for j in [column-1, column, column+1]:
-                          
-                         # if alive and not itself count as alive
-                        if (self.world[i,j] == 1): # and ([i, j] != [row, column]):
-                            alive = alive + 1
-                                
-                        # rules function decides whether it lives or dies
-                temp[row,column] = self.rules(self.world[row,column], alive)
+        temp = update_world_(self.world_size, self.world, temp)
+       
         self.world = temp
         self.alive = np.sum(np.sum(self.world))
 
@@ -102,23 +127,24 @@ def plot_statistics(num_iteration, num_alive, num_perc_alive):
     plt.xlabel("Iterations")
     plt.ylabel(" (%) alive cells")
     plt.title("Percentage of alive cells vs number of iterations")
+    plt.savefig("files/percentage_cells_iterations.png")
     plt.show()
-    plt.savefig("files/percentage_cells_iterations.png", format="png")
 
     # plot 2
     plt.plot(num_iteration, num_alive)
     plt.xlabel("Iterations")
     plt.ylabel("Alive cells")
     plt.title("Alive cells vs number of iterations")
+    plt.savefig("files/cells_iterations.png")
     plt.show()
-    plt.savefig("files/cells_iterations.png", format="png")
+    
 
 
 if __name__ == "__main__":
     # parsing user input
     # example: python generations.py --size=50 --spawn_freq=10
     parser = argparse.ArgumentParser()
-    parser.add_argument("--size", dest="size", help="World size (e.g 100)", default=150, type=int)
+    parser.add_argument("--size", dest="size", help="World size (e.g 100)", default=200, type=int)
     parser.add_argument("--spawn_freq", dest="spawn_freq", help="Spawn freq (e.g 100)", default=10, type=int)
     args = parser.parse_args()
 
