@@ -1,6 +1,6 @@
 # Cellular Automata (Conway's Game of Life)
 <p align="center">
-  <img src = "files/world.png" height="250"/>
+  <img src = "files/gameoflife.gif" height="250"/>
 <p/>
    
 ## About
@@ -26,7 +26,7 @@ These rules, which compare the behavior of the automaton to real life, can be co
 more info: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
 ## Requirements
-`requirements.txt`
+`pip install -r requirements.txt`
 
 ## Usage
 * Install requirements `pip install -r requirements.txt`
